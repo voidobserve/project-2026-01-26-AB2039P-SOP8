@@ -1312,7 +1312,7 @@
 	"driver_saradc.h"
 	"bsp_saradc_vbat.h"
 
-1769414480 source:d:\a_workst\aworkst\d--共非\2026-01-24-共非-ab2039p-sop8\code\麼字\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_sys.c
+1769417932 source:d:\a_workst\aworkst\d--共非\2026-01-24-共非-ab2039p-sop8\code\麼字\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_sys.c
 	"include.h"
 	"driver_lowpwr.h"
 	"bsp_saradc_key.h"
@@ -1323,7 +1323,7 @@
 	"driver_uart.h"
 	"bsp_uart_debug.h"
 
-1769414402 source:d:\a_workst\aworkst\d--共非\2026-01-24-共非-ab2039p-sop8\code\麼字\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_uart_transfer.c
+1769423272 source:d:\a_workst\aworkst\d--共非\2026-01-24-共非-ab2039p-sop8\code\麼字\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_uart_transfer.c
 	"include.h"
 	"driver_gpio.h"
 	"driver_uart.h"

@@ -5,10 +5,15 @@
 
 #if BSP_UART_TRANSFER_EN
 
+// #define UART_TX_PORT GPIOB_REG
+// #define UART_TX_PIN GPIO_PIN_3
+// #define UART_RX_PORT GPIOB_REG
+// #define UART_RX_PIN GPIO_PIN_4
+
 #define UART_TX_PORT GPIOB_REG
-#define UART_TX_PIN GPIO_PIN_3
+#define UART_TX_PIN GPIO_PIN_4
 #define UART_RX_PORT GPIOB_REG
-#define UART_RX_PIN GPIO_PIN_4
+#define UART_RX_PIN GPIO_PIN_3
 
 static volatile uint8_t uart_transfer_timeout AT(.tbox.voice_enc_buf);
 static volatile ring_buf_t uart_transfer_ring_buf AT(.tbox.voice_enc_buf);
