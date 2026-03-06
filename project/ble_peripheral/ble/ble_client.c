@@ -52,6 +52,7 @@ void ble_client_event_callback(uint8_t event_type, uint8_t *packet, uint16_t siz
     switch(event_type){
         case BLE_EVT_CONNECT:
             printf("BLE_EVT_CONNECT\n");
+            my_printf("BLE_EVT_CONNECT\n");
             memcpy(&server_info.conn_handle, &packet[7], 2);
             printf("server_info.conn_handle:%x\n",server_info.conn_handle);
             tc_state = STA_W4_SERVICE_RESULT;
@@ -61,6 +62,7 @@ void ble_client_event_callback(uint8_t event_type, uint8_t *packet, uint16_t siz
 
         case BLE_EVT_DISCONNECT:
             printf("BLE_EVT_DISCONNECT\n");
+            my_printf("BLE_EVT_DISCONNECT\n");
             server_info.conn_handle = 0;
             ble_scan_en();
             return;

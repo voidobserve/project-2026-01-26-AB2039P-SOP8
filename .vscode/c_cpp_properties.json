@@ -50,6 +50,7 @@
                 "${workspaceFolder}/project/ble_peripheral/prod_test",
                 "${workspaceFolder}/project/ble_peripheral/prod_test/iodm",
                 "${workspaceFolder}/project/ble_peripheral/prod_test/tbox",
+                "${workspaceFolder}/**",
                 "C:/Program Files (x86)/RV32-Toolchain/RV32-V1/lib/gcc/riscv32-elf/6.1.0/include",
                 "C:/Program Files (x86)/RV32-Toolchain/RV32-V1/lib/gcc/riscv32-elf/6.1.0/include-fixed"
             ],
