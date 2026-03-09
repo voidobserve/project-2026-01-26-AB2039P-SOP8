@@ -1,5 +1,8 @@
 #include "include.h"
 #include "ble_client.h"
+#include "bsp_uart_transfer.h"
+#include "user_config.h"
+#include "user_include.h"
 
 typedef enum {
     STA_IDLE,
@@ -32,14 +35,46 @@ static bool ble_adv_report_analyse(adv_report_t *adv_report)
         //     }
         // }
 
-        if (adv_struct.adv_type == 0xff)
-        {
-            if (adv_struct.data[0] == 'C'
-                && adv_struct.data[1] == 'S'
-                && adv_struct.data[2] == 0x00
-                && adv_struct.data[3] == 0x01)
-            {
-                return true;
+        if (adv_struct.adv_type == 0xff) {
+            if (user_data.is_ble_addr_valid == 0) {
+                // 当前没有记录蓝牙地址，搜索任意匹配的从机
+                if ( adv_struct.data_len >= 14
+                    && adv_struct.data[0] == 'C'
+                    && adv_struct.data[1] == 'S'
+                    && adv_struct.data[2] == 0x00
+                    && adv_struct.data[3] == 0x01 
+                ) {
+                    memcpy(user_data.ble_addr, adv_struct.data + 8, 6);
+                    user_data.is_ble_addr_valid = 1;
+
+                    // for (uint8_t i = 0; i < 6; i++) {
+                    //     my_printf("%02x ", (uint16_t)user_data.ble_addr[i]);
+                    // }
+                    // my_printf("\n");
+                    user_data_write();
+                    // my_printf("slave addr first record\n");
+                    return true;
+                }
+            }
+            else {
+                // 当前有记录蓝牙地址，搜索地址匹配的从机
+                if (adv_struct.data_len >= 14
+                    && adv_struct.data[0] == 'C'
+                    && adv_struct.data[1] == 'S'
+                    && adv_struct.data[2] == 0x00
+                    && adv_struct.data[3] == 0x01 
+
+                    // 从机的蓝牙地址
+                    && adv_struct.data[8] == user_data.ble_addr[0]
+                    && adv_struct.data[9] == user_data.ble_addr[1]
+                    && adv_struct.data[10] == user_data.ble_addr[2]               
+                    && adv_struct.data[11] == user_data.ble_addr[3]                    
+                    && adv_struct.data[12] == user_data.ble_addr[4]                
+                    && adv_struct.data[13] == user_data.ble_addr[5]               
+                ) { 
+                    // my_printf("adv_data equal\n"); 
+                    return true;
+                }
             }
         }
     }
@@ -49,22 +84,37 @@ static bool ble_adv_report_analyse(adv_report_t *adv_report)
 
 void ble_client_event_callback(uint8_t event_type, uint8_t *packet, uint16_t size)
 {
+    uint8_t slave_addr[6]; // 从机蓝牙地址
     switch(event_type){
         case BLE_EVT_CONNECT:
+            memcpy(slave_addr, packet + 1, 6);
             printf("BLE_EVT_CONNECT\n");
-            my_printf("BLE_EVT_CONNECT\n");
+#if USER_DEBUG_ENABLE
+            // my_printf("BLE_EVT_CONNECT\n");
+
+            // 这里打印的是逆序的从机地址
+            // my_printf("slave addr:\n");
+            // for (uint8_t i = 0; i < 6; i++) {
+            //     my_printf("%02x ", (uint16_t)slave_addr[i]);
+            // }
+            // my_printf("\n");
+#endif
             memcpy(&server_info.conn_handle, &packet[7], 2);
             printf("server_info.conn_handle:%x\n",server_info.conn_handle);
             tc_state = STA_W4_SERVICE_RESULT;
             server_info.service_cnt = 0;
-            ble_client_discover_primary_services(server_info.conn_handle);
+            ble_client_discover_primary_services(server_info.conn_handle); 
+            uart_send_cmd(CMD_CONNECT_SUCCEED_PREFIX); // 反馈，连接成功 
             return;
 
         case BLE_EVT_DISCONNECT:
             printf("BLE_EVT_DISCONNECT\n");
-            my_printf("BLE_EVT_DISCONNECT\n");
+#if USER_DEBUG_ENABLE            
+            // my_printf("BLE_EVT_DISCONNECT\n");
+#endif
             server_info.conn_handle = 0;
             ble_scan_en();
+            uart_send_cmd(CMD_CONNECT_DIS_PREFIX); // 反馈，断开连接
             return;
 
         case BLE_EVT_CONNECT_PARAM_UPDATE_DONE:
@@ -77,6 +127,18 @@ void ble_client_event_callback(uint8_t event_type, uint8_t *packet, uint16_t siz
             adv_report.offset = 0;
             memcpy(&adv_report, packet, 10);
             adv_report.report = &packet[10];
+
+            // my_printf("BLE_EVT_ADV_REPORT\n");
+            // my_printf("adv_report addr:\n");
+            // for (uint8_t i = 0; i < 6; i++)
+            // {
+            //     my_printf("%02x ", (uint16_t)adv_report.addr[i + 3]);
+            // }
+            // my_printf("\n");
+            // if (0 == memcmp(adv_report.addr + 3, (uint8_t *){0x2D, 0xF7, 0x9B, 0xDF, 0x42, 0x41}, 6))
+            // {
+            //     my_printf("slave addr is equal\n");
+            // }
 
             if (ble_adv_report_analyse(&adv_report)){
                 ble_scan_dis();
@@ -257,10 +319,8 @@ void ble_write_test(void)
 void ble_write_to_server(uint8_t *buff, uint32_t len)
 {
     u8 i = 0;
-    while (i < server_info.characteristic_cnt)
-    {
-        if ((server_info.characteristic[i].properties & ATT_PROPERTY_WRITE) == ATT_PROPERTY_WRITE)
-        {
+    while (i < server_info.characteristic_cnt)    {
+        if ((server_info.characteristic[i].properties & ATT_PROPERTY_WRITE) == ATT_PROPERTY_WRITE)        {
             printf("write uuid:%04x, ", server_info.characteristic[i].uuid16);
             print_kr(buff, len);
             ble_write_req_for_character(server_info.conn_handle, &server_info.characteristic[i], buff, len);

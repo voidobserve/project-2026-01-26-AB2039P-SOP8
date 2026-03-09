@@ -1600,7 +1600,7 @@
 
 1722848330 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_huart_iodm.h
 
-1767407005 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_uart_transfer.h
+1773019947 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_uart_transfer.h
 
 1722848330 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\app\func.h
 	"func_bt.h"
@@ -1680,9 +1680,12 @@
 1733542410 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\ble\ble_alarm.c
 	"include.h"
 
-1772790403 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\ble\ble_client.c
+1773025463 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\ble\ble_client.c
 	"include.h"
 	"ble_client.h"
+	"bsp_uart_transfer.h"
+	"user_config.h"
+	"user_include.h"
 
 1772790190 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\ble\ble_fota_service.c
 	"include.h"
@@ -1708,7 +1711,7 @@
 	"ble_user_service.h"
 	"ble_fota_service.h"
 
-1772790190 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\ble\ble_user_service.c
+1773018666 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\ble\ble_user_service.c
 	"include.h"
 
 1739435984 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_huart.c
@@ -1767,10 +1770,11 @@
 	"driver_saradc.h"
 	"bsp_saradc_vbat.h"
 
-1769417932 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_sys.c
+1773023683 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_sys.c
 	"include.h"
 	"driver_lowpwr.h"
 	"bsp_saradc_key.h"
+	"user_include.h"
 
 1767402086 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_uart_debug.c
 	"include.h"
@@ -1778,7 +1782,7 @@
 	"driver_uart.h"
 	"bsp_uart_debug.h"
 
-1772789680 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_uart_transfer.c
+1773025473 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\bsp\bsp_uart_transfer.c
 	"include.h"
 	"driver_gpio.h"
 	"driver_uart.h"
@@ -1835,12 +1839,12 @@
 	"include.h"
 	"user_include.h"
 
-1772786323 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\user\user_config.h
+1773025731 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\user\user_config.h
 
-1772788412 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\user\user_include.h
+1773023668 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\user\user_include.h
 	"include.h"
 
-1772788536 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\user\user_main.c
+1773025501 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8\project\ble_peripheral\user\user_main.c
 	"include.h"
 	"user_config.h"
 	"user_include.h"

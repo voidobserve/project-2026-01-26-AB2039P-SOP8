@@ -27,26 +27,7 @@
 
 #define CMD_FRAME_FIX_LEN (CMD_HEADER_LEN + 2) // 帧长度 (固定长度，帧头 3 + 命令字 1 + 数据 1)
 
-// 指令码定义
-typedef enum
-{
-    CMD_NONE = 0x00,
 
-    // ==============================================================
-    // 传输方向：蓝牙ic -> 客户的单片机
-    CMD_CONNECT_BEGIN_PREFIX = 0x92, // 开始连接
-    CMD_CONNECT_BEGIN_SUFFIX = 0x98,
-
-    CMD_CONNECT_SUCCEED_PREFIX = 0x93, // 连接成功
-    CMD_CONNECT_SUCCEED_SUFFIX = 0x99,
-
-    CMD_CONNECT_DIS_SUCCEED_PREFIX = 0x95, // 断开连接成功（包括收到断开连接的指令，也包括因掉线断开的情况）
-    CMD_CONNECT_DIS_SUCCEED_SUFFIX = 0x9B,
-    // ==============================================================
-    // 传输方向： 客户的单片机 -> 蓝牙ic
-    CMD_CONNECT_DIS_PREFIX = 0x94, // 断开连接（主机应该清除记忆的从机的地址）
-    CMD_CONNECT_DIS_SUFFIX = 0x9A,
-} cmd_code_t;
 
 // 解析状态机
 typedef enum
@@ -171,9 +152,10 @@ void user_uart_putchar(char ch)
 #endif
 
 // 根据传参，发送一帧对应的控制命令
+// 传参是传入指令的前缀
 void uart_send_cmd(cmd_code_t cmd_prefix)
 {
-    u8 cmd_suffix = 0;
+    u8 cmd_suffix = 0; // 存放指令的后缀
     switch (cmd_prefix)
     {
     case CMD_CONNECT_BEGIN_PREFIX:
@@ -188,7 +170,7 @@ void uart_send_cmd(cmd_code_t cmd_prefix)
 
     default:
 #if USER_DEBUG_ENABLE
-        my_printf("uart_send_cmd error\n");
+        // my_printf("uart_send_cmd error\n");
 #endif
         return;
         break;
@@ -404,34 +386,31 @@ void uart_transfer_rx_event(void)
                 if (uart_cmd_buff_read_last_byte() == CMD_CONNECT_DIS_PREFIX &&
                     byte == CMD_CONNECT_DIS_SUFFIX)
                 {
-                    my_printf("ble_cb.con_handle == %u\n", ble_cb.con_handle);
-                    my_printf("server_info.conn_handle == %u\n", server_info.conn_handle);
-
-                    // USER_TO_DO 主机这里打印的值是0
-                    if (ble_cb.con_handle != 0)
+                    // my_printf("server_info.conn_handle == %u\n", server_info.conn_handle); 
+                    if (server_info.conn_handle != 0)
                     {
                         // 如果已经连接，断开当前连接
-                        ble_disconnect(ble_cb.con_handle);
-                        my_printf("disconnect\n");
+                        ble_disconnect(server_info.conn_handle);
+                        // my_printf("disconnect\n"); // 改成在事件处理函数中打印断开连接的信息
                     }
 
-                    // USER_TO_DO 主机应该清除记录从机的蓝牙地址
-                    // 主机应该5s内都不打开搜索
+                    // 主机应该清除记录从机的蓝牙地址
+                    // 主机应该 xx s内都不打开搜索
                     ble_scan_dis();
                     ble_scan_re_en_delay_set();
+                    memset(user_data.ble_addr, 0, sizeof(user_data.ble_addr)); // 清空记录的从机的地址
+                    user_data.is_ble_addr_valid = 0;
+                    user_data_write(); // 将数据写回flash
 
                     uart_cmd_buff_write_byte(byte);
-                    uart_cmd_success_feedback();
-#if USER_DEBUG_ENABLE
-                    my_printf("connect dis succeess\n");
-#endif
+                    // uart_cmd_success_feedback(); // 由断开连接事件的处理函数发送，不在这里反馈（ble_client.c -> ble_client_event_callback()）
                 }
                 else
                 {
                     uart_cmd_buff_error();
                     ble_notify_buff_write_byte(byte);
 #if USER_DEBUG_ENABLE
-                    my_printf("cmd error\n");
+                    // my_printf("cmd error\n");
 #endif
                 }
 
@@ -445,7 +424,7 @@ void uart_transfer_rx_event(void)
         {
             ble_notify_buff_send_all();
 #if USER_DEBUG_ENABLE
-            my_printf("ble notify\n");
+            // my_printf("ble notify\n");
 #endif
         }
     }
