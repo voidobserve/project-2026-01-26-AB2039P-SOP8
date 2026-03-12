@@ -8,18 +8,19 @@
 // 需要掉电保存的数据
 typedef struct __attribute__((packed))
 {
-    u8 valid; // 校验，用于验证是不是第一次上电，之前写入的数据是否有效
+    u8 valid;             // 校验，用于验证是不是第一次上电，之前写入的数据是否有效
+    u8 is_scan_en;        // 搜索功能是否使能
     u8 is_ble_addr_valid; // 标志位，用于验证蓝牙地址是否有效，0：蓝牙地址无效（没有记录蓝牙地址），1：蓝牙地址有效
-    u8 ble_addr[6];
+    u8 ble_addr[6];       // 存放从机的蓝牙地址
 } user_data_t;
 
 // 定义用户自定义的延时控制结构
 typedef struct
 {
-    u32 trigger_tick;
-    u32 delay_ms;
-    bool pending;
-} user_delay_ctx_t; // control timer x
+    u32 trigger_tick; // 通过调用 tick_get() 来更新
+    u32 delay_ms;     // 目标延时时间
+    bool pending;     // 延时是否完成
+} user_delay_ctx_t;   // control timer x，执行延时操作的控制块
 
 extern volatile user_data_t user_data;
 

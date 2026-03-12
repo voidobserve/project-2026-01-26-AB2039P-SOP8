@@ -104,7 +104,9 @@ void ble_client_event_callback(uint8_t event_type, uint8_t *packet, uint16_t siz
             tc_state = STA_W4_SERVICE_RESULT;
             server_info.service_cnt = 0;
             ble_client_discover_primary_services(server_info.conn_handle); 
-            uart_send_cmd(CMD_CONNECT_SUCCEED_PREFIX); // 反馈，连接成功 
+            // USER_TO_DO 蓝牙连接成功后，要等一会再发送数据给语音ic
+
+            
             return;
 
         case BLE_EVT_DISCONNECT:
@@ -114,7 +116,6 @@ void ble_client_event_callback(uint8_t event_type, uint8_t *packet, uint16_t siz
 #endif
             server_info.conn_handle = 0;
             ble_scan_en();
-            uart_send_cmd(CMD_CONNECT_DIS_PREFIX); // 反馈，断开连接
             return;
 
         case BLE_EVT_CONNECT_PARAM_UPDATE_DONE:

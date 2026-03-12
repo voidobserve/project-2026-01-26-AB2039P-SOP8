@@ -709,6 +709,8 @@ Discarded input sections
                 0x0000000000000000        0xa Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
  .text.uart_cmd_success_feedback
                 0x0000000000000000       0x5a Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
+ .text.uart_send_cmd
+                0x0000000000000000       0x68 Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
  .text          0x0000000000000000        0x0 Output\obj\project\ble_peripheral\main.o
  .data          0x0000000000000000        0x0 Output\obj\project\ble_peripheral\main.o
  .bss           0x0000000000000000        0x0 Output\obj\project\ble_peripheral\main.o
@@ -2379,288 +2381,285 @@ LOAD Output\obj\project\ble_peripheral\user\user_main.o
  .text.ble_att_read_callback
                 0x000000001000268e        0x4 Output\obj\project\ble_peripheral\ble\ble_client.o
  .text.ble_client_event_callback
-                0x0000000010002692      0x304 Output\obj\project\ble_peripheral\ble\ble_client.o
+                0x0000000010002692      0x2f8 Output\obj\project\ble_peripheral\ble\ble_client.o
                 0x0000000010002692                ble_client_event_callback
  .text.ble_client_notify_callback
-                0x0000000010002996       0x16 Output\obj\project\ble_peripheral\ble\ble_client.o
+                0x000000001000298a       0x16 Output\obj\project\ble_peripheral\ble\ble_client.o
  .text.ble_client_init
-                0x00000000100029ac       0x2c Output\obj\project\ble_peripheral\ble\ble_client.o
-                0x00000000100029ac                ble_client_init
+                0x00000000100029a0       0x2c Output\obj\project\ble_peripheral\ble\ble_client.o
+                0x00000000100029a0                ble_client_init
  .text.ble_set_work_mode
-                0x00000000100029d8        0x8 Output\obj\project\ble_peripheral\ble\ble_init.o
-                0x00000000100029d8                ble_set_work_mode
+                0x00000000100029cc        0x8 Output\obj\project\ble_peripheral\ble\ble_init.o
+                0x00000000100029cc                ble_set_work_mode
  .text.ble_txpkt_init
-                0x00000000100029e0        0xe Output\obj\project\ble_peripheral\ble\ble_init.o
-                0x00000000100029e0                ble_txpkt_init
+                0x00000000100029d4        0xe Output\obj\project\ble_peripheral\ble\ble_init.o
+                0x00000000100029d4                ble_txpkt_init
  .text.ble_scan_param_init
-                0x00000000100029ee       0x2c Output\obj\project\ble_peripheral\ble\ble_init.o
-                0x00000000100029ee                ble_scan_param_init
+                0x00000000100029e2       0x2c Output\obj\project\ble_peripheral\ble\ble_init.o
+                0x00000000100029e2                ble_scan_param_init
  .text.ble_central_init
-                0x0000000010002a1a       0x18 Output\obj\project\ble_peripheral\ble\ble_init.o
-                0x0000000010002a1a                ble_central_init
+                0x0000000010002a0e       0x18 Output\obj\project\ble_peripheral\ble\ble_init.o
+                0x0000000010002a0e                ble_central_init
  .text.bsp_ble_init
-                0x0000000010002a32       0x22 Output\obj\project\ble_peripheral\ble\ble_init.o
-                0x0000000010002a32                bsp_ble_init
+                0x0000000010002a26       0x22 Output\obj\project\ble_peripheral\ble\ble_init.o
+                0x0000000010002a26                bsp_ble_init
  .text.service_notify_event
-                0x0000000010002a54       0x42 Output\obj\project\ble_peripheral\ble\ble_user_service.o
-                0x0000000010002a54                service_notify_event
+                0x0000000010002a48       0x42 Output\obj\project\ble_peripheral\ble\ble_user_service.o
+                0x0000000010002a48                service_notify_event
  .text.bsp.param
-                0x0000000010002a96       0x18 Output\obj\project\ble_peripheral\bsp\bsp_param.o
-                0x0000000010002a96                bsp_param_init
-                0x0000000010002aa2                bsp_param_write
-                0x0000000010002aa6                bsp_param_read
-                0x0000000010002aaa                bsp_param_sync
+                0x0000000010002a8a       0x18 Output\obj\project\ble_peripheral\bsp\bsp_param.o
+                0x0000000010002a8a                bsp_param_init
+                0x0000000010002a96                bsp_param_write
+                0x0000000010002a9a                bsp_param_read
+                0x0000000010002a9e                bsp_param_sync
  .text.sys_ram_info_dump
-                0x0000000010002aae        0x2 Output\obj\project\ble_peripheral\bsp\bsp_sys.o
-                0x0000000010002aae                sys_ram_info_dump
+                0x0000000010002aa2        0x2 Output\obj\project\ble_peripheral\bsp\bsp_sys.o
+                0x0000000010002aa2                sys_ram_info_dump
  .text.bsp.sys.init
-                0x0000000010002ab0       0x88 Output\obj\project\ble_peripheral\bsp\bsp_sys.o
-                0x0000000010002ab0                bsp_sys_init
+                0x0000000010002aa4       0x88 Output\obj\project\ble_peripheral\bsp\bsp_sys.o
+                0x0000000010002aa4                bsp_sys_init
  .text.ble_notify_buff_write_byte
-                0x0000000010002b38       0x22 Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
+                0x0000000010002b2c       0x22 Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
  .text.uart_cmd_buff_write_byte
-                0x0000000010002b5a       0x22 Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
-                0x0000000010002b5a                uart_cmd_buff_write_byte
+                0x0000000010002b4e       0x22 Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
+                0x0000000010002b4e                uart_cmd_buff_write_byte
  .text.uart_cmd_buff_read_last_byte
-                0x0000000010002b7c       0x1c Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
-                0x0000000010002b7c                uart_cmd_buff_read_last_byte
+                0x0000000010002b70       0x1c Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
+                0x0000000010002b70                uart_cmd_buff_read_last_byte
  .text.uart_cmd_buff_error
-                0x0000000010002b98       0x34 Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
-                0x0000000010002b98                uart_cmd_buff_error
- .text.uart_send_cmd
-                0x0000000010002bcc      0x106 Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
-                0x0000000010002bcc                uart_send_cmd
+                0x0000000010002b8c       0x34 Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
+                0x0000000010002b8c                uart_cmd_buff_error
  .text.uart_transfer_init
-                0x0000000010002cd2       0xc4 Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
-                0x0000000010002cd2                uart_transfer_init
+                0x0000000010002bc0       0xbe Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
+                0x0000000010002bc0                uart_transfer_init
  .text.uart_transfer_rx_event
-                0x0000000010002d96      0x13e Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
-                0x0000000010002d96                uart_transfer_rx_event
+                0x0000000010002c7e      0x158 Output\obj\project\ble_peripheral\bsp\bsp_uart_transfer.o
+                0x0000000010002c7e                uart_transfer_rx_event
  .text.startup.main
-                0x0000000010002ed4       0x32 Output\obj\project\ble_peripheral\main.o
-                0x0000000010002ed4                main
+                0x0000000010002dd6       0x32 Output\obj\project\ble_peripheral\main.o
+                0x0000000010002dd6                main
  .text.prod_test_init
-                0x0000000010002f06        0x2 Output\obj\project\ble_peripheral\prod_test\prod_test.o
-                0x0000000010002f06                prod_test_init
+                0x0000000010002e08        0x2 Output\obj\project\ble_peripheral\prod_test\prod_test.o
+                0x0000000010002e08                prod_test_init
  .text.hci_fcc_init
-                0x0000000010002f08        0x2 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f08                hci_fcc_init
+                0x0000000010002e0a        0x2 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e0a                hci_fcc_init
  .text.bt_uart_isr
-                0x0000000010002f0a        0x4 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f0a                bt_uart_isr
+                0x0000000010002e0c        0x4 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e0c                bt_uart_isr
  .text.ble_sm_client_event_do
-                0x0000000010002f0e        0x2 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f0e                ble_sm_client_event_do
+                0x0000000010002e10        0x2 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e10                ble_sm_client_event_do
  .text.sm_send_security_request
-                0x0000000010002f10        0x2 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f10                sm_send_security_request
+                0x0000000010002e12        0x2 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e12                sm_send_security_request
  .text.sm_request_pairing
-                0x0000000010002f12        0x2 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f12                sm_request_pairing
+                0x0000000010002e14        0x2 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e14                sm_request_pairing
  .text.sm_passkey_input
-                0x0000000010002f14        0x2 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f14                sm_passkey_input
+                0x0000000010002e16        0x2 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e16                sm_passkey_input
  .text.sm_passkey_input_get
-                0x0000000010002f16        0x4 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f16                sm_passkey_input_get
+                0x0000000010002e18        0x4 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e18                sm_passkey_input_get
  .text.ble_get_local_bd_addr
-                0x0000000010002f1a       0x14 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f1a                ble_get_local_bd_addr
+                0x0000000010002e1c       0x14 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e1c                ble_get_local_bd_addr
  .text.bt_rf_get_param
-                0x0000000010002f2e       0x16 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f2e                bt_rf_get_param
+                0x0000000010002e30       0x16 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e30                bt_rf_get_param
  .text.ble_get_link_info
-                0x0000000010002f44        0x6 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f44                ble_get_link_info
+                0x0000000010002e46        0x6 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e46                ble_get_link_info
  .text.ble_put_link_info
-                0x0000000010002f4a       0x10 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f4a                ble_put_link_info
+                0x0000000010002e4c       0x10 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e4c                ble_put_link_info
  .text.ble_mtu_exchange_enabled
-                0x0000000010002f5a        0x4 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f5a                ble_mtu_exchange_enabled
+                0x0000000010002e5c        0x4 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e5c                ble_mtu_exchange_enabled
  .text.ble_sm_pairing_support
-                0x0000000010002f5e        0x4 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f5e                ble_sm_pairing_support
+                0x0000000010002e60        0x4 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e60                ble_sm_pairing_support
  .text.ble_rx_exit_sleep
-                0x0000000010002f62        0x4 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f62                ble_rx_exit_sleep
+                0x0000000010002e64        0x4 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e64                ble_rx_exit_sleep
  .text.ble_feature_exchange_enabled
-                0x0000000010002f66        0x4 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f66                ble_feature_exchange_enabled
+                0x0000000010002e68        0x4 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e68                ble_feature_exchange_enabled
  .text.ble_length_request_enabled
-                0x0000000010002f6a        0x4 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f6a                ble_length_request_enabled
+                0x0000000010002e6c        0x4 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e6c                ble_length_request_enabled
  .text.ble_phy_update_enable
-                0x0000000010002f6e        0x4 Output\obj\project\ble_peripheral\strong_ble.o
-                0x0000000010002f6e                ble_phy_update_enable
+                0x0000000010002e70        0x4 Output\obj\project\ble_peripheral\strong_ble.o
+                0x0000000010002e70                ble_phy_update_enable
  .text.mem_heap_size_get
-                0x0000000010002f72        0x8 Output\obj\project\ble_peripheral\strong_symbol.o
-                0x0000000010002f72                mem_heap_size_get
+                0x0000000010002e74        0x8 Output\obj\project\ble_peripheral\strong_symbol.o
+                0x0000000010002e74                mem_heap_size_get
  .text.thread_cfg_get
-                0x0000000010002f7a        0xa Output\obj\project\ble_peripheral\strong_symbol.o
-                0x0000000010002f7a                thread_cfg_get
+                0x0000000010002e7c        0xa Output\obj\project\ble_peripheral\strong_symbol.o
+                0x0000000010002e7c                thread_cfg_get
  .text.thread_create_callback
-                0x0000000010002f84        0x4 Output\obj\project\ble_peripheral\strong_symbol.o
-                0x0000000010002f84                thread_create_callback
+                0x0000000010002e86        0x4 Output\obj\project\ble_peripheral\strong_symbol.o
+                0x0000000010002e86                thread_create_callback
  .text.xosc_get_xcfg
-                0x0000000010002f88       0x20 Output\obj\project\ble_peripheral\strong_symbol.o
-                0x0000000010002f88                xosc_get_xcfg
+                0x0000000010002e8a       0x20 Output\obj\project\ble_peripheral\strong_symbol.o
+                0x0000000010002e8a                xosc_get_xcfg
  .text.param_xosc_read
-                0x0000000010002fa8        0x8 Output\obj\project\ble_peripheral\strong_symbol.o
-                0x0000000010002fa8                param_xosc_read
+                0x0000000010002eaa        0x8 Output\obj\project\ble_peripheral\strong_symbol.o
+                0x0000000010002eaa                param_xosc_read
  .text.sys_clk_change_callback
-                0x0000000010002fb0        0x2 Output\obj\project\ble_peripheral\strong_symbol.o
-                0x0000000010002fb0                sys_clk_change_callback
+                0x0000000010002eb2        0x2 Output\obj\project\ble_peripheral\strong_symbol.o
+                0x0000000010002eb2                sys_clk_change_callback
  .text.uart_debug_init_callback
-                0x0000000010002fb2        0xc Output\obj\project\ble_peripheral\strong_symbol.o
-                0x0000000010002fb2                uart_debug_init_callback
+                0x0000000010002eb4        0xc Output\obj\project\ble_peripheral\strong_symbol.o
+                0x0000000010002eb4                uart_debug_init_callback
  .text.user_data_write
-                0x0000000010002fbe       0x1a Output\obj\project\ble_peripheral\user\user_main.o
-                0x0000000010002fbe                user_data_write
+                0x0000000010002ec0       0x1a Output\obj\project\ble_peripheral\user\user_main.o
+                0x0000000010002ec0                user_data_write
  .text.user_data_read
-                0x0000000010002fd8       0x4a Output\obj\project\ble_peripheral\user\user_main.o
-                0x0000000010002fd8                user_data_read
+                0x0000000010002eda       0x4a Output\obj\project\ble_peripheral\user\user_main.o
+                0x0000000010002eda                user_data_read
  .text.ble_scan_re_en_delay_set
-                0x0000000010003022       0x26 Output\obj\project\ble_peripheral\user\user_main.o
-                0x0000000010003022                ble_scan_re_en_delay_set
+                0x0000000010002f24       0x26 Output\obj\project\ble_peripheral\user\user_main.o
+                0x0000000010002f24                ble_scan_re_en_delay_set
  .text.delay_check
-                0x0000000010003048       0x2e Output\obj\project\ble_peripheral\user\user_main.o
-                0x0000000010003048                delay_check
+                0x0000000010002f4a       0x2e Output\obj\project\ble_peripheral\user\user_main.o
+                0x0000000010002f4a                delay_check
  .text.user_init
-                0x0000000010003076        0x2 Output\obj\project\ble_peripheral\user\user_main.o
-                0x0000000010003076                user_init
+                0x0000000010002f78        0x2 Output\obj\project\ble_peripheral\user\user_main.o
+                0x0000000010002f78                user_init
  .text.user_main
-                0x0000000010003078        0x2 Output\obj\project\ble_peripheral\user\user_main.o
-                0x0000000010003078                user_main
+                0x0000000010002f7a        0x2 Output\obj\project\ble_peripheral\user\user_main.o
+                0x0000000010002f7a                user_main
  .text.cm_loadpage
-                0x000000001000307a       0xb0 ..\..\libs\cpu\libplatform.a(cm.o)
+                0x0000000010002f7c       0xb0 ..\..\libs\cpu\libplatform.a(cm.o)
  .text.cm_next_freepage
-                0x000000001000312a       0x54 ..\..\libs\cpu\libplatform.a(cm.o)
+                0x000000001000302c       0x54 ..\..\libs\cpu\libplatform.a(cm.o)
  .text.cm_loadparam
-                0x000000001000317e        0x4 ..\..\libs\cpu\libplatform.a(cm.o)
-                0x000000001000317e                cm_loadparam
+                0x0000000010003080        0x4 ..\..\libs\cpu\libplatform.a(cm.o)
+                0x0000000010003080                cm_loadparam
  .text.cm_factory
-                0x0000000010003182        0xa ..\..\libs\cpu\libplatform.a(cm.o)
-                0x0000000010003182                cm_factory
+                0x0000000010003084        0xa ..\..\libs\cpu\libplatform.a(cm.o)
+                0x0000000010003084                cm_factory
  .text.cm_addr_check
-                0x000000001000318c        0x4 ..\..\libs\cpu\libplatform.a(cm.o)
-                0x000000001000318c                cm_addr_check
+                0x000000001000308e        0x4 ..\..\libs\cpu\libplatform.a(cm.o)
+                0x000000001000308e                cm_addr_check
  .text.cm_writepage
-                0x0000000010003190       0x28 ..\..\libs\cpu\libplatform.a(cm.o)
+                0x0000000010003092       0x28 ..\..\libs\cpu\libplatform.a(cm.o)
  .text.cm_movepage
-                0x00000000100031b8       0x50 ..\..\libs\cpu\libplatform.a(cm.o)
+                0x00000000100030ba       0x50 ..\..\libs\cpu\libplatform.a(cm.o)
  .text.cm_erase
-                0x0000000010003208       0x1c ..\..\libs\cpu\libplatform.a(cm.o)
+                0x000000001000310a       0x1c ..\..\libs\cpu\libplatform.a(cm.o)
  .text.cm_release
-                0x0000000010003224       0xfa ..\..\libs\cpu\libplatform.a(cm.o)
+                0x0000000010003126       0xfa ..\..\libs\cpu\libplatform.a(cm.o)
  .text.cm_savepage
-                0x000000001000331e       0xda ..\..\libs\cpu\libplatform.a(cm.o)
+                0x0000000010003220       0xda ..\..\libs\cpu\libplatform.a(cm.o)
  .text.cm_check_loadpage
-                0x00000000100033f8       0xb0 ..\..\libs\cpu\libplatform.a(cm.o)
- .text.cm_sync  0x00000000100034a8       0x3e ..\..\libs\cpu\libplatform.a(cm.o)
-                0x00000000100034a8                cm_sync
- .text.cm_read  0x00000000100034e6       0x42 ..\..\libs\cpu\libplatform.a(cm.o)
-                0x00000000100034e6                cm_read
+                0x00000000100032fa       0xb0 ..\..\libs\cpu\libplatform.a(cm.o)
+ .text.cm_sync  0x00000000100033aa       0x3e ..\..\libs\cpu\libplatform.a(cm.o)
+                0x00000000100033aa                cm_sync
+ .text.cm_read  0x00000000100033e8       0x42 ..\..\libs\cpu\libplatform.a(cm.o)
+                0x00000000100033e8                cm_read
  .text.cm_write
-                0x0000000010003528       0x5e ..\..\libs\cpu\libplatform.a(cm.o)
-                0x0000000010003528                cm_write
- .text.cm_init  0x0000000010003586      0x1e4 ..\..\libs\cpu\libplatform.a(cm.o)
-                0x0000000010003586                cm_init
+                0x000000001000342a       0x5e ..\..\libs\cpu\libplatform.a(cm.o)
+                0x000000001000342a                cm_write
+ .text.cm_init  0x0000000010003488      0x1e4 ..\..\libs\cpu\libplatform.a(cm.o)
+                0x0000000010003488                cm_init
  .text.xcfg_init
-                0x000000001000376a       0x4c ..\..\libs\cpu\libplatform.a(xcfg.o)
-                0x000000001000376a                xcfg_init
+                0x000000001000366c       0x4c ..\..\libs\cpu\libplatform.a(xcfg.o)
+                0x000000001000366c                xcfg_init
  .text.platform_main
-                0x00000000100037b6      0x154 ..\..\libs\cpu\libplatform.a(main.o)
-                0x00000000100037b6                platform_main
+                0x00000000100036b8      0x154 ..\..\libs\cpu\libplatform.a(main.o)
+                0x00000000100036b8                platform_main
  .text.main_startup
-                0x000000001000390a        0xe ..\..\libs\cpu\libplatform.a(main.o)
-                0x000000001000390a                main_startup
+                0x000000001000380c        0xe ..\..\libs\cpu\libplatform.a(main.o)
+                0x000000001000380c                main_startup
  .text.register_isr
-                0x0000000010003918       0x38 ..\..\libs\cpu\libplatform.a(interrupt.o)
-                0x0000000010003918                register_isr
+                0x000000001000381a       0x38 ..\..\libs\cpu\libplatform.a(interrupt.o)
+                0x000000001000381a                register_isr
  .text.sys_irq_init
-                0x0000000010003950       0x8a ..\..\libs\cpu\libplatform.a(interrupt.o)
-                0x0000000010003950                sys_irq_init
+                0x0000000010003852       0x88 ..\..\libs\cpu\libplatform.a(interrupt.o)
+                0x0000000010003852                sys_irq_init
  .text.soft_irq_init
-                0x00000000100039da       0x44 ..\..\libs\cpu\libplatform.a(interrupt.o)
-                0x00000000100039da                soft_irq_init
+                0x00000000100038da       0x44 ..\..\libs\cpu\libplatform.a(interrupt.o)
+                0x00000000100038da                soft_irq_init
  .text.bthw_irq_init
-                0x0000000010003a1e        0xe ..\..\libs\cpu\libplatform.a(interrupt.o)
-                0x0000000010003a1e                bthw_irq_init
+                0x000000001000391e        0xe ..\..\libs\cpu\libplatform.a(interrupt.o)
+                0x000000001000391e                bthw_irq_init
  .text.sys_timer_init
-                0x0000000010003a2c       0x5e ..\..\libs\cpu\libplatform.a(interrupt.o)
-                0x0000000010003a2c                sys_timer_init
+                0x000000001000392c       0x5e ..\..\libs\cpu\libplatform.a(interrupt.o)
+                0x000000001000392c                sys_timer_init
  .text.thread_btstack_create
-                0x0000000010003a8a       0x82 ..\..\libs\cpu\libplatform.a(startup.o)
-                0x0000000010003a8a                thread_btstack_create
+                0x000000001000398a       0x82 ..\..\libs\cpu\libplatform.a(startup.o)
+                0x000000001000398a                thread_btstack_create
  .text.thread_main_entry
-                0x0000000010003b0c       0x2e ..\..\libs\cpu\libplatform.a(startup.o)
+                0x0000000010003a0c       0x2e ..\..\libs\cpu\libplatform.a(startup.o)
  .text.startup.init
-                0x0000000010003b3a      0x100 ..\..\libs\cpu\libplatform.a(startup.o)
-                0x0000000010003b3a                platform_init
-                0x0000000010003b42                sys_startup
+                0x0000000010003a3a      0x100 ..\..\libs\cpu\libplatform.a(startup.o)
+                0x0000000010003a3a                platform_init
+                0x0000000010003a42                sys_startup
  .text.bt_set_timer_enable
-                0x0000000010003c3a       0x18 ..\..\libs\cpu\libplatform.a(startup.o)
-                0x0000000010003c3a                bt_set_timer_enable
+                0x0000000010003b3a       0x18 ..\..\libs\cpu\libplatform.a(startup.o)
+                0x0000000010003b3a                bt_set_timer_enable
  .text.sys_set_tmr_enable
-                0x0000000010003c52       0x22 ..\..\libs\cpu\libplatform.a(startup.o)
-                0x0000000010003c52                sys_set_tmr_enable
+                0x0000000010003b52       0x22 ..\..\libs\cpu\libplatform.a(startup.o)
+                0x0000000010003b52                sys_set_tmr_enable
  .text.sys_hook_init
-                0x0000000010003c74        0x2 ..\..\libs\cpu\libplatform.a(sys_hook.o)
-                0x0000000010003c74                sys_hook_init
+                0x0000000010003b74        0x2 ..\..\libs\cpu\libplatform.a(sys_hook.o)
+                0x0000000010003b74                sys_hook_init
  .text.pll0_vco_band_trimming
-                0x0000000010003c76      0x176 ..\..\libs\cpu\libplatform.a(pll.o)
-                0x0000000010003c76                pll0_vco_band_trimming
+                0x0000000010003b76      0x176 ..\..\libs\cpu\libplatform.a(pll.o)
+                0x0000000010003b76                pll0_vco_band_trimming
  .text.pll0_init
-                0x0000000010003dec       0x62 ..\..\libs\cpu\libplatform.a(pll.o)
-                0x0000000010003dec                pll0_init
+                0x0000000010003cec       0x62 ..\..\libs\cpu\libplatform.a(pll.o)
+                0x0000000010003cec                pll0_init
  .text.pll0_disable
-                0x0000000010003e4e       0x16 ..\..\libs\cpu\libplatform.a(pll.o)
-                0x0000000010003e4e                pll0_disable
+                0x0000000010003d4e       0x16 ..\..\libs\cpu\libplatform.a(pll.o)
+                0x0000000010003d4e                pll0_disable
  .text.pmu_set_buck_mode
-                0x0000000010003e64       0x48 ..\..\libs\cpu\libplatform.a(pmu.o)
-                0x0000000010003e64                pmu_set_buck_mode
+                0x0000000010003d64       0x48 ..\..\libs\cpu\libplatform.a(pmu.o)
+                0x0000000010003d64                pmu_set_buck_mode
  .text.pmu_voltage_configure
-                0x0000000010003eac       0x48 ..\..\libs\cpu\libplatform.a(pmu.o)
-                0x0000000010003eac                pmu_voltage_configure
+                0x0000000010003dac       0x48 ..\..\libs\cpu\libplatform.a(pmu.o)
+                0x0000000010003dac                pmu_voltage_configure
  .text.pmu_init
-                0x0000000010003ef4      0x2e4 ..\..\libs\cpu\libplatform.a(pmu.o)
-                0x0000000010003ef4                pmu_init
+                0x0000000010003df4      0x2e4 ..\..\libs\cpu\libplatform.a(pmu.o)
+                0x0000000010003df4                pmu_init
  .text.debug_set
-                0x00000000100041d8       0x20 ..\..\libs\cpu\libplatform.a(debug.o)
-                0x00000000100041d8                debug_set
+                0x00000000100040d8       0x20 ..\..\libs\cpu\libplatform.a(debug.o)
+                0x00000000100040d8                debug_set
  .text.ota_pack_is_update_success
-                0x00000000100041f8       0x10 ..\..\libs\cpu\libplatform.a(fot_pack.o)
-                0x00000000100041f8                ota_pack_is_update_success
+                0x00000000100040f8       0x10 ..\..\libs\cpu\libplatform.a(fot_pack.o)
+                0x00000000100040f8                ota_pack_is_update_success
  .text.lock_init
-                0x0000000010004208       0x10 ..\..\libs\cpu\libplatform.a(lock.o)
-                0x0000000010004208                lock_init
+                0x0000000010004108       0x10 ..\..\libs\cpu\libplatform.a(lock.o)
+                0x0000000010004108                lock_init
  .text.patch_init
-                0x0000000010004218       0x5a ..\..\libs\cpu\libplatform.a(patch.o)
-                0x0000000010004218                patch_init
+                0x0000000010004118       0x5a ..\..\libs\cpu\libplatform.a(patch.o)
+                0x0000000010004118                patch_init
  .text.udivmoddi4
-                0x0000000010004272       0x96 ..\..\libs\cpu\libplatform.a(sys.o)
+                0x0000000010004172       0x96 ..\..\libs\cpu\libplatform.a(sys.o)
  .text.sys_rst_init
-                0x0000000010004308       0x94 ..\..\libs\cpu\libplatform.a(sys.o)
-                0x0000000010004308                sys_rst_init
+                0x0000000010004208       0x94 ..\..\libs\cpu\libplatform.a(sys.o)
+                0x0000000010004208                sys_rst_init
  .text.sys_rst_dump
-                0x000000001000439c       0x74 ..\..\libs\cpu\libplatform.a(sys.o)
-                0x000000001000439c                sys_rst_dump
+                0x000000001000429c       0x74 ..\..\libs\cpu\libplatform.a(sys.o)
+                0x000000001000429c                sys_rst_dump
  .text.rc2m_clk_nhz_cal
-                0x0000000010004410       0xda ..\..\libs\cpu\libplatform.a(sys.o)
-                0x0000000010004410                rc2m_clk_nhz_cal
+                0x0000000010004310       0xda ..\..\libs\cpu\libplatform.a(sys.o)
+                0x0000000010004310                rc2m_clk_nhz_cal
  .text.sys_get_rand_key_init
-                0x00000000100044ea        0xa ..\..\libs\cpu\libplatform.a(sys.o)
-                0x00000000100044ea                sys_get_rand_key_init
+                0x00000000100043ea        0xa ..\..\libs\cpu\libplatform.a(sys.o)
+                0x00000000100043ea                sys_get_rand_key_init
  .text.xosc_init
-                0x00000000100044f4       0x92 ..\..\libs\cpu\libplatform.a(sys.o)
-                0x00000000100044f4                xosc_init
+                0x00000000100043f4       0x92 ..\..\libs\cpu\libplatform.a(sys.o)
+                0x00000000100043f4                xosc_init
  .text.__udivdi3
-                0x0000000010004586        0x6 ..\..\libs\cpu\libplatform.a(sys.o)
-                0x0000000010004586                __udivdi3
+                0x0000000010004486        0x6 ..\..\libs\cpu\libplatform.a(sys.o)
+                0x0000000010004486                __udivdi3
  .text.sys_clk_cacl_curr
-                0x000000001000458c       0x18 ..\..\libs\cpu\libplatform.a(sys_clk.o)
- *fill*         0x00000000100045a4       0x5c 
+                0x000000001000448c       0x18 ..\..\libs\cpu\libplatform.a(sys_clk.o)
+ *fill*         0x00000000100044a4      0x15c 
  .text.set_sys_clk_do
                 0x0000000010004600      0x1f2 ..\..\libs\cpu\libplatform.a(sys_clk.o)
                 0x0000000010004600                set_sys_clk_do

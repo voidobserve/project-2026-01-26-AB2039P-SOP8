@@ -19,15 +19,13 @@
 #define UART_RX_PORT GPIOB_REG
 #define UART_RX_PIN GPIO_PIN_3
 
-// 指令帧格式定义
-#define CMD_FRAME_HEADER_1 0x80 // 帧头第 1 字节
-#define CMD_FRAME_HEADER_2 0x03 // 帧头第 2 字节
-#define CMD_FRAME_HEADER_3 0x03 // 帧头第 3 字节
-#define CMD_HEADER_LEN 3
+// // 指令帧格式定义
+// #define CMD_FRAME_HEADER_1 0x80 // 帧头第 1 字节
+// #define CMD_FRAME_HEADER_2 0x03 // 帧头第 2 字节
+// #define CMD_FRAME_HEADER_3 0x02 // 帧头第 3 字节
+// #define CMD_HEADER_LEN 3
 
-#define CMD_FRAME_FIX_LEN (CMD_HEADER_LEN + 2) // 帧长度 (固定长度，帧头 3 + 命令字 1 + 数据 1)
-
-
+// #define CMD_FRAME_FIX_LEN (CMD_HEADER_LEN + 2) // 帧长度 (固定长度，帧头 3 + 命令字 1 + 数据 1)
 
 // 解析状态机
 typedef enum
@@ -60,7 +58,7 @@ static volatile uint8_t uart_transfer_buf[512] AT(.tbox.voice_enc_buf);
 static volatile uint8_t ble_notify_buff[512]; // 存放准备用ble notify发送出去的数据
 static volatile uint16_t ble_notify_buff_len; // 待发送出去的数据长度
 
-static volatile uint8_t uart_cmd_buff[CMD_FRAME_FIX_LEN]; // 存放接收到的命令数据
+static volatile uint8_t uart_cmd_buff[CMD_RECV_FRAME_FIX_LEN]; // 存放接收到的命令数据
 static volatile uint8_t uart_cmd_buff_recved_len = 0;
 
 // 将一个字节的数据写入缓冲区，后续会用 ble notify 发送出去
@@ -152,48 +150,24 @@ void user_uart_putchar(char ch)
 #endif
 
 // 根据传参，发送一帧对应的控制命令
-// 传参是传入指令的前缀
-void uart_send_cmd(cmd_code_t cmd_prefix)
+void uart_send_cmd(cmd_code_t cmd_prefix, cmd_code_t cmd_suffix)
 {
-    u8 cmd_suffix = 0; // 存放指令的后缀
-    switch (cmd_prefix)
+    u8 buf[] = {
+        CMD_SEND_FRAME_HEADER_1,
+        CMD_SEND_FRAME_HEADER_2,
+        CMD_SEND_FRAME_HEADER_3,
+        0xFF, // cmd_prefix
+        0xFF, // cmd_suffix
+    };
+    u8 i;
+
+    for (i = 0; i < sizeof(buf); i++)
     {
-    case CMD_CONNECT_BEGIN_PREFIX:
-        cmd_suffix = CMD_CONNECT_BEGIN_SUFFIX;
-        break;
-    case CMD_CONNECT_SUCCEED_PREFIX:
-        cmd_suffix = CMD_CONNECT_SUCCEED_SUFFIX;
-        break;
-    case CMD_CONNECT_DIS_PREFIX:
-        cmd_suffix = CMD_CONNECT_DIS_SUFFIX;
-        break;
-
-    default:
-#if USER_DEBUG_ENABLE
-        // my_printf("uart_send_cmd error\n");
-#endif
-        return;
-        break;
+        WDT_CLR();
+        while (uart_get_flag(UART, UART_IT_TX) != SET) // 等待数据发送完成
+            ;
+        uart_send_data(UART, buf[i]);
     }
-
-    WDT_CLR();
-    while (uart_get_flag(UART, UART_IT_TX) != SET) // 等待数据发送完成
-        ;
-    uart_send_data(UART, CMD_FRAME_HEADER_1);
-    while (uart_get_flag(UART, UART_IT_TX) != SET) // 等待数据发送完成
-        ;
-    uart_send_data(UART, CMD_FRAME_HEADER_2);
-    while (uart_get_flag(UART, UART_IT_TX) != SET) // 等待数据发送完成
-        ;
-    uart_send_data(UART, CMD_FRAME_HEADER_3);
-    while (uart_get_flag(UART, UART_IT_TX) != SET) // 等待数据发送完成
-        ;
-    uart_send_data(UART, cmd_prefix);
-    while (uart_get_flag(UART, UART_IT_TX) != SET) // 等待数据发送完成
-        ;
-    uart_send_data(UART, cmd_suffix);
-    while (uart_get_flag(UART, UART_IT_TX) != SET) // 等待数据发送完成
-        ;
 }
 
 void uart_transfer_init(u32 baud)
@@ -244,8 +218,6 @@ void uart_transfer_init(u32 baud)
     my_printf_init(user_uart_putchar); // 注册用户自定义的打印函数
     my_printf("user_uart_init\n");
 #endif
-
-    uart_send_cmd(CMD_CONNECT_BEGIN_PREFIX);
 }
 
 AT(.com_periph.uart.send)
@@ -332,7 +304,7 @@ void uart_transfer_rx_event(void)
 
             if (parser.state == PARSER_STATE_IDLE)
             {
-                if (byte == CMD_FRAME_HEADER_1)
+                if (byte == CMD_RECV_FRAME_HEADER_1)
                 {
                     uart_cmd_buff_write_byte(byte);
                     parser.state = PARSER_STATE_HEADER_1;
@@ -344,7 +316,7 @@ void uart_transfer_rx_event(void)
             }
             else if (parser.state == PARSER_STATE_HEADER_1)
             {
-                if (byte == CMD_FRAME_HEADER_2)
+                if (byte == CMD_RECV_FRAME_HEADER_2)
                 {
                     uart_cmd_buff_write_byte(byte);
                     parser.state = PARSER_STATE_HEADER_2;
@@ -357,7 +329,7 @@ void uart_transfer_rx_event(void)
             }
             else if (parser.state == PARSER_STATE_HEADER_2)
             {
-                if (byte == CMD_FRAME_HEADER_3)
+                if (byte == CMD_RECV_FRAME_HEADER_3)
                 {
                     uart_cmd_buff_write_byte(byte);
                     parser.state = PARSER_STATE_HEADER_3;
@@ -370,7 +342,8 @@ void uart_transfer_rx_event(void)
             }
             else if (parser.state == PARSER_STATE_HEADER_3)
             {
-                if (byte == CMD_CONNECT_DIS_PREFIX)
+                if (byte == CMD_START_PAIRING_PREFIX || // 收到了开始配对的前缀
+                    byte == CMD_CANCEL_PAIRING_PREFIX)  // 收到了取消配对的前缀
                 {
                     uart_cmd_buff_write_byte(byte);
                     parser.state = PARSER_STATE_DATA_1;
@@ -383,10 +356,11 @@ void uart_transfer_rx_event(void)
             }
             else if (parser.state == PARSER_STATE_DATA_1)
             {
-                if (uart_cmd_buff_read_last_byte() == CMD_CONNECT_DIS_PREFIX &&
-                    byte == CMD_CONNECT_DIS_SUFFIX)
+                if (uart_cmd_buff_read_last_byte() == CMD_START_PAIRING_PREFIX &&
+                    byte == CMD_START_PAIRING_SUFFIX)
                 {
-                    // my_printf("server_info.conn_handle == %u\n", server_info.conn_handle); 
+                    // 开始配对
+                    // my_printf("server_info.conn_handle == %u\n", server_info.conn_handle);
                     if (server_info.conn_handle != 0)
                     {
                         // 如果已经连接，断开当前连接
@@ -404,6 +378,19 @@ void uart_transfer_rx_event(void)
 
                     uart_cmd_buff_write_byte(byte);
                     // uart_cmd_success_feedback(); // 由断开连接事件的处理函数发送，不在这里反馈（ble_client.c -> ble_client_event_callback()）
+                }
+                else if ((uart_cmd_buff_read_last_byte() == CMD_CANCEL_PAIRING_PREFIX &&
+                          byte == CMD_CANCEL_PAIRING_SUFFIX))
+                {
+                    // 取消配对
+                    if (server_info.conn_handle != 0)
+                    {
+                        // 如果已经连接，断开当前连接
+                        ble_disconnect(server_info.conn_handle);
+                        // my_printf("disconnect\n"); // 改成在事件处理函数中打印断开连接的信息
+                    }
+
+                    
                 }
                 else
                 {
