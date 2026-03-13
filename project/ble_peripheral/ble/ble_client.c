@@ -90,7 +90,7 @@ void ble_client_event_callback(uint8_t event_type, uint8_t *packet, uint16_t siz
             memcpy(slave_addr, packet + 1, 6);
             printf("BLE_EVT_CONNECT\n");
 #if USER_DEBUG_ENABLE
-            // my_printf("BLE_EVT_CONNECT\n");
+            my_printf("BLE_EVT_CONNECT\n");
 
             // 这里打印的是逆序的从机地址
             // my_printf("slave addr:\n");
@@ -104,18 +104,25 @@ void ble_client_event_callback(uint8_t event_type, uint8_t *packet, uint16_t siz
             tc_state = STA_W4_SERVICE_RESULT;
             server_info.service_cnt = 0;
             ble_client_discover_primary_services(server_info.conn_handle); 
-            // USER_TO_DO 蓝牙连接成功后，要等一会再发送数据给语音ic
-
             
+            // 蓝牙连接成功后，要等一会再发送数据给语音ic
+            user_delay_ctx_set(
+                USER_DELAY_CTX_ID_BLE_CONNECT_SUCCESS_FEEDBACK, 
+                1000,
+                user_delay_ctx_ble_connect_success_feedback_handle);
             return;
 
         case BLE_EVT_DISCONNECT:
             printf("BLE_EVT_DISCONNECT\n");
 #if USER_DEBUG_ENABLE            
-            // my_printf("BLE_EVT_DISCONNECT\n");
+            my_printf("BLE_EVT_DISCONNECT\n");
 #endif
             server_info.conn_handle = 0;
-            ble_scan_en();
+
+            if (user_data.is_scan_en)
+            {
+                ble_scan_en();
+            }            
             return;
 
         case BLE_EVT_CONNECT_PARAM_UPDATE_DONE:

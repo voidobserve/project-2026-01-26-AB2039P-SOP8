@@ -29,12 +29,16 @@ typedef enum
     CMD_NONE = 0x00,
 
     // ==============================================================
-    // 传输方向：蓝牙ic -> 客户的单片机
-    // CMD_CONNECT_BEGIN_PREFIX = 0x92, // 开始连接
-    // CMD_CONNECT_BEGIN_SUFFIX = 0x98,
+    // 传输方向：蓝牙ic -> 语音ic
+    CMD_PAIRING_HAS_BEGUN_PREFIX = 0x92, // 让语音ic播报：好的，开始配对
+    CMD_PAIRING_HAS_BEGUN_SUFFIX = 0x98,
 
-    // CMD_CONNECT_SUCCEED_PREFIX = 0x93, // 连接成功
-    // CMD_CONNECT_SUCCEED_SUFFIX = 0x99,
+    CMD_PAIRING_HAS_CANCEL_PREFIX = 0x93, // 让语音ic播报：好的，已清除配对
+    CMD_PAIRING_HAS_CANCEL_SUFFIX = 0x99,
+
+    CMD_CONNECT_SUCCESS_PREFIX = 0x94, // 让语音ic播报：蓝牙已连接
+    CMD_CONNECT_SUCCESS_SUFFIX = 0x9A,
+
     // // ==============================================================
     // // 传输方向： 客户的单片机 -> 蓝牙ic ， 蓝牙ic -> 客户的单片机
     // CMD_CONNECT_DIS_PREFIX = 0x94, // 断开连接（主机应该清除记忆的从机的地址）

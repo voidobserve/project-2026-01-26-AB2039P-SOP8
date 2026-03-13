@@ -1,16 +1,14 @@
 #include "include.h"
 #include "ble_client.h"
 #include "ble_init.h"
-
+#include "user_include.h"
 
 ///////////////////////////////////////////////////////////////////////////
-#define TX_POOL_SIZE       128
-
+#define TX_POOL_SIZE 128
 
 ble_cb_t ble_cb AT(.ble_buf.var);
 
-BLE_WORK_MODE cfg_bt_work_mode            = MODE_NORMAL;
-
+BLE_WORK_MODE cfg_bt_work_mode = MODE_NORMAL;
 
 AT(.ble_cache.att)
 uint32_t ble_tx_pool[TX_POOL_SIZE / 4 + 3];
@@ -47,7 +45,24 @@ void ble_scan_param_init(void)
     scan_param.scan_interval = 0x100;
     scan_param.scan_window = 0x50;
     ble_set_scan_param(&scan_param);
-    ble_scan_en();
+
+    // 上电之后，检测主机的搜索功能是否使能
+    if (user_data.is_scan_en)
+    {
+        ble_scan_en();
+#if USER_DEBUG_ENABLE
+        my_printf("in func:ble_scan_param_init\n");
+        my_printf("master scan enable\n");
+#endif
+    }
+    else
+    {
+        ble_scan_dis();
+#if USER_DEBUG_ENABLE
+        my_printf("in func:ble_scan_param_init\n");
+        my_printf("master scan disable\n");
+#endif
+    }
 }
 
 void ble_central_init(void)
@@ -58,11 +73,10 @@ void ble_central_init(void)
 #endif
     gatt_client_init();
     gap_random_address_set_mode(GAP_PUBLIC_ADDRESS_TYPE);
-    //att_server_init(ble_get_profile_data());
+    // att_server_init(ble_get_profile_data());
     ble_client_init();
     ble_scan_param_init();
 }
-
 
 void ble_periph_init(void)
 {
@@ -89,7 +103,7 @@ void bsp_ble_init(void)
 #endif
 
     ble_setup();
-    
+
 #if ALARM_NUMBER
     ble_alarm_init();
 #endif

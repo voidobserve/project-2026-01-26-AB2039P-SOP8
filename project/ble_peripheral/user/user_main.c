@@ -4,7 +4,7 @@
 
 volatile user_data_t user_data = {0};
 
-static volatile user_delay_ctx_t ble_scan_re_en_ctx; // ble scan 重新使能的控制变量
+static volatile user_delay_ctx_t user_delay_ctx[USER_DELAY_CTX_ID_MAX] = {0};
 
 #define USER_DATE_SAVE_START_ADDR 0x00 // 起始地址
 
@@ -22,6 +22,7 @@ void user_data_read(void)
         // 初始化存放的数据
         user_data.valid = USER_DATA_VALID_VAL;
         user_data.is_ble_addr_valid = 0;
+        user_data.is_scan_en = 1; // 默认使能搜索
         memset(user_data.ble_addr, 0, 6);
         user_data_write(); // 将数据写回flash
     }
@@ -39,26 +40,60 @@ void user_data_read(void)
 #endif
 }
 
-void ble_scan_re_en_delay_set(void)
+void user_delay_ctx_ble_connect_success_feedback_handle(void)
 {
-    // 设置延时执行标记
-    ble_scan_re_en_ctx.trigger_tick = tick_get();
-    ble_scan_re_en_ctx.delay_ms = (u32)10 * 1000; // 延时 xx ms（实际测试5s会有些快，来不及给从机断电就重连了）
-    ble_scan_re_en_ctx.pending = true;
+    // 发送连接成功反馈
+    uart_send_cmd(CMD_CONNECT_SUCCESS_PREFIX, CMD_CONNECT_SUCCESS_SUFFIX);
 }
 
-void delay_check(void)
+void user_delay_ctx_init(void)
 {
-    if (ble_scan_re_en_ctx.pending)
+    u8 i;
+    for (i = 0; i < ARRAY_SIEZE(user_delay_ctx); i++)
     {
-        if (tick_check_expire(ble_scan_re_en_ctx.trigger_tick, ble_scan_re_en_ctx.delay_ms))
+        user_delay_ctx[i].trigger_tick = 0;
+        user_delay_ctx[i].delay_ms = 0;
+        user_delay_ctx[i].is_enable = 0;
+        user_delay_ctx[i].callback = NULL;
+    }
+}
+
+void user_delay_ctx_set(user_delay_ctx_id_t id, u32 delay_ms, int (*callback)(void))
+{
+    user_delay_ctx[id].is_enable = 0; // 先屏蔽，最后再使能
+    user_delay_ctx[id].trigger_tick = tick_get();
+    user_delay_ctx[id].delay_ms = delay_ms;
+    user_delay_ctx[id].callback = callback;
+    user_delay_ctx[id].is_enable = 1;
+}
+
+void user_delay_ctx_cancel(user_delay_ctx_id_t id)
+{
+    user_delay_ctx[id].is_enable = 0;
+}
+
+void user_delay_ctx_handle(void)
+{
+    u8 i;
+    for (i = 0; i < ARRAY_SIEZE(user_delay_ctx); i++)
+    {
+        if (user_delay_ctx[i].is_enable == 0)
+        {
+            // 当前轮询到的任务没有使能，继续轮询下一个任务
+            continue;
+        }
+
+        if (tick_check_expire(user_delay_ctx[i].trigger_tick, user_delay_ctx[i].delay_ms))
         {
             // 延时时间到，执行操作
-            // my_printf("ble scan re-enable delayed execution\n");
+            // my_printf("user delay ctx %d delayed execution\n", i);
+            user_delay_ctx[i].is_enable = 0; // 任务只执行一次
 
-            // 在这里添加需要延时执行的操作
-            ble_scan_en(); 
-            ble_scan_re_en_ctx.pending = false;
+            // 在这里添加需要延时执行操作
+            if (user_delay_ctx[i].callback != NULL)
+            {
+                user_delay_ctx[i].callback();
+            }
         }
     }
 }
@@ -66,9 +101,14 @@ void delay_check(void)
 void user_init(void)
 {
     user_data_read();
+    user_delay_ctx_init();
+#if USER_DEBUG_ENABLE
+    my_printf("user_init\n");
+#endif
 }
 
 void user_main(void)
 {
-    delay_check();
+    // delay_check();
+    user_delay_ctx_handle();
 }

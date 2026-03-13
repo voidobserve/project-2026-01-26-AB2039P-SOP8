@@ -2004,7 +2004,7 @@
 1725959716 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\driver\driver_wdt.h
 	"driver_com.h"
 
-1772788396 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\app\func.c
+1773388032 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\app\func.c
 	"include.h"
 	"user_include.h"
 
@@ -2076,7 +2076,7 @@
 
 1722848330 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\bsp\bsp_huart_iodm.h
 
-1773309257 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\bsp\bsp_uart_transfer.h
+1773392737 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\bsp\bsp_uart_transfer.h
 
 1722848330 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\app\func.h
 	"func_bt.h"
@@ -2113,8 +2113,9 @@
 1725498886 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\prod_test\tbox\tbox_key.h
 	"include.h"
 
-1773191362 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\user\user_include.h
+1773395939 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\user\user_include.h
 	"include.h"
+	"user_config.h"
 
 1723082996 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\app\func_idle.c
 	"include.h"
@@ -2159,22 +2160,23 @@
 1733542410 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\ble\ble_alarm.c
 	"include.h"
 
-1773025463 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\ble\ble_client.c
+1773396092 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\ble\ble_client.c
 	"include.h"
 	"ble_client.h"
 	"bsp_uart_transfer.h"
 	"user_config.h"
 	"user_include.h"
 
-1773025731 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\user\user_config.h
+1773396874 d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\user\user_config.h
 
 1772790190 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\ble\ble_fota_service.c
 	"include.h"
 
-1767410762 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\ble\ble_init.c
+1773396165 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\ble\ble_init.c
 	"include.h"
 	"ble_client.h"
 	"ble_init.h"
+	"user_include.h"
 
 1767419776 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\ble\ble_proc.c
 	"include.h"
@@ -2251,7 +2253,7 @@
 	"driver_saradc.h"
 	"bsp_saradc_vbat.h"
 
-1773023683 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\bsp\bsp_sys.c
+1773385691 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\bsp\bsp_sys.c
 	"include.h"
 	"driver_lowpwr.h"
 	"bsp_saradc_key.h"
@@ -2310,4 +2312,18 @@
 1773191594 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\app\func_bt.c
 	"include.h"
 	"func.h"
+
+1773396388 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\bsp\bsp_uart_transfer.c
+	"include.h"
+	"driver_gpio.h"
+	"driver_uart.h"
+	"bsp_uart_transfer.h"
+	"ble_user_service.h"
+	"user_config.h"
+	"user_include.h"
+
+1773395963 source:d:\a_workst\aworkst\99-项目\d--鼎润\2026-01-24-鼎润-ab2039p-sop8\code\主机\project-2026-01-26-ab2039p-sop8-master\project\ble_peripheral\user\user_main.c
+	"include.h"
+	"user_config.h"
+	"user_include.h"
 

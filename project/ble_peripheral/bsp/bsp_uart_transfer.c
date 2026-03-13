@@ -34,8 +34,8 @@ typedef enum
     PARSER_STATE_HEADER_1, // 等待帧头第 1 字节
     PARSER_STATE_HEADER_2, // 等待帧头第 2 字节
     PARSER_STATE_HEADER_3, // 等待帧头第 3 字节
-    PARSER_STATE_DATA_1,   //
-    PARSER_STATE_DATA_2,   //
+    PARSER_STATE_DATA_1,   // 接收数据1
+    PARSER_STATE_DATA_2,   // 接收数据2
     PARSER_STATE_COMPLETE, // 解析完成
 } parser_state_t;
 
@@ -159,15 +159,19 @@ void uart_send_cmd(cmd_code_t cmd_prefix, cmd_code_t cmd_suffix)
         0xFF, // cmd_prefix
         0xFF, // cmd_suffix
     };
-    u8 i;
+    buf[3] = cmd_prefix;
+    buf[4] = cmd_suffix;
 
-    for (i = 0; i < sizeof(buf); i++)
-    {
-        WDT_CLR();
-        while (uart_get_flag(UART, UART_IT_TX) != SET) // 等待数据发送完成
-            ;
-        uart_send_data(UART, buf[i]);
-    }
+    // u8 i;
+    // for (i = 0; i < sizeof(buf); i++)
+    // {
+    //     WDT_CLR();
+    //     while (uart_get_flag(UART, UART_IT_TX) != SET) // 等待数据发送完成
+    //         ;
+    //     uart_send_data(UART, buf[i]);
+    // }
+
+    uart_transfer_tx_buff(buf, sizeof(buf));
 }
 
 void uart_transfer_init(u32 baud)
@@ -253,31 +257,6 @@ void uart_transfer_tx_buff(uint8_t *buff, uint32_t len)
 
 void uart_transfer_rx_event(void)
 {
-#if 0
-    uint8_t *ptr = NULL;
-    u32 len = 0;
-
-#ifdef CLIENT
-    // uart_transfer_test_event();
-#endif
-
-    if (uart_transfer_timeout == 1)
-    {
-        uart_transfer_timeout = 0;
-
-        len = ring_buf_read(&uart_transfer_ring_buf, uart_transfer_buf_temp, uart_transfer_ring_buf.data_len);
-        ptr = uart_transfer_buf_temp;
-
-#ifdef CLIENT
-        // 主机接收串口然后通过BLE WRITE到从机
-        ble_write_to_server(ptr, len);
-#else
-        // 从机接收串口然后通过BLE NOTIFY到主机
-        service_notify_event(ptr, len);
-#endif
-    }
-#endif
-
     u8 byte = 0;
     u32 ret = 0;
 
@@ -360,44 +339,68 @@ void uart_transfer_rx_event(void)
                     byte == CMD_START_PAIRING_SUFFIX)
                 {
                     // 开始配对
+#if USER_DEBUG_ENABLE
+                    my_printf("recv cmd start pairing\n");
+#endif  
+                    // 主机应该清除记录从机的蓝牙地址：
+                    memset(user_data.ble_addr, 0, sizeof(user_data.ble_addr)); // 清空记录的从机的地址
+                    user_data.is_ble_addr_valid = 0;
+                    user_data.is_scan_en = 1; // 使能搜索功能
+                    user_data_write();        // 将数据写回flash
+
                     // my_printf("server_info.conn_handle == %u\n", server_info.conn_handle);
                     if (server_info.conn_handle != 0)
                     {
                         // 如果已经连接，断开当前连接
                         ble_disconnect(server_info.conn_handle);
                         // my_printf("disconnect\n"); // 改成在事件处理函数中打印断开连接的信息
-                    }
+                    } 
 
-                    // 主机应该清除记录从机的蓝牙地址
-                    // 主机应该 xx s内都不打开搜索
-                    ble_scan_dis();
-                    ble_scan_re_en_delay_set();
-                    memset(user_data.ble_addr, 0, sizeof(user_data.ble_addr)); // 清空记录的从机的地址
-                    user_data.is_ble_addr_valid = 0;
-                    user_data_write(); // 将数据写回flash
-
+                    ble_scan_en(); // 取消配对会关闭扫描，到进行配对的时候要重新打开扫描
                     uart_cmd_buff_write_byte(byte);
                     // uart_cmd_success_feedback(); // 由断开连接事件的处理函数发送，不在这里反馈（ble_client.c -> ble_client_event_callback()）
+                    uart_send_cmd(CMD_PAIRING_HAS_BEGUN_PREFIX, CMD_PAIRING_HAS_BEGUN_SUFFIX);
                 }
                 else if ((uart_cmd_buff_read_last_byte() == CMD_CANCEL_PAIRING_PREFIX &&
                           byte == CMD_CANCEL_PAIRING_SUFFIX))
                 {
                     // 取消配对
+#if USER_DEBUG_ENABLE
+                    my_printf("recv cmd cancel pairing\n");
+#endif
+
+                    memset(user_data.ble_addr, 0, sizeof(user_data.ble_addr)); // 清空记录的从机的地址
+                    user_data.is_ble_addr_valid = 0;
+                    user_data.is_scan_en = 0;
+                    user_data_write(); // 将数据写回flash
+
                     if (server_info.conn_handle != 0)
                     {
-                        // 如果已经连接，断开当前连接
+                        /*
+                            如果已经连接，断开当前连接
+                            注意，需要先将 user_data.is_scan_en 清零，再断开连接，
+                            否则会在 ble_client.c -> ble_client_event_callback() 中，
+                            触发断开连接事件，原本的SDK是在断开连接后恢复扫描，现在通过 user_data.is_scan_en 来限制它
+                        */
                         ble_disconnect(server_info.conn_handle);
                         // my_printf("disconnect\n"); // 改成在事件处理函数中打印断开连接的信息
                     }
 
-                    
+                    ble_scan_dis();
+                    // 这一步需要放在搜索功能关闭之后，防止连接成功后，又调用了 user_delay_ctx_set() 建立了任务
+                    user_delay_ctx_cancel(USER_DELAY_CTX_ID_BLE_CONNECT_SUCCESS_FEEDBACK); // 防止连接成功后又马上取消配对，结果发出连接成功反馈
+
+#if USER_DEBUG_ENABLE
+                    my_printf("master scan disable\n");
+#endif
+                    uart_send_cmd(CMD_PAIRING_HAS_CANCEL_PREFIX, CMD_PAIRING_HAS_CANCEL_SUFFIX);
                 }
                 else
                 {
                     uart_cmd_buff_error();
                     ble_notify_buff_write_byte(byte);
 #if USER_DEBUG_ENABLE
-                    // my_printf("cmd error\n");
+                    my_printf("cmd error\n");
 #endif
                 }
 
@@ -411,7 +414,7 @@ void uart_transfer_rx_event(void)
         {
             ble_notify_buff_send_all();
 #if USER_DEBUG_ENABLE
-            // my_printf("ble notify\n");
+            my_printf("ble notify\n");
 #endif
         }
     }
