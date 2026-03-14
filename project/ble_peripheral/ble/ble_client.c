@@ -108,7 +108,7 @@ void ble_client_event_callback(uint8_t event_type, uint8_t *packet, uint16_t siz
             // 蓝牙连接成功后，要等一会再发送数据给语音ic
             user_delay_ctx_set(
                 USER_DELAY_CTX_ID_BLE_CONNECT_SUCCESS_FEEDBACK, 
-                1000,
+                5000,
                 user_delay_ctx_ble_connect_success_feedback_handle);
             return;
 

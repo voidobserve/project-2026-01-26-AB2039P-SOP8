@@ -55,23 +55,31 @@ static volatile ring_buf_t uart_transfer_ring_buf AT(.tbox.voice_enc_buf);
 static volatile uint8_t uart_transfer_buf[512] AT(.tbox.voice_enc_buf);
 // static volatile uint8_t uart_transfer_buf_temp[512];
 
-static volatile uint8_t ble_notify_buff[512]; // 存放准备用ble notify发送出去的数据
-static volatile uint16_t ble_notify_buff_len; // 待发送出去的数据长度
+static volatile uint8_t ble_write_buff[512]; // 存放准备用 ble write 发送出去的数据
+static volatile uint16_t ble_write_buff_len; // 待发送出去的数据长度
 
 static volatile uint8_t uart_cmd_buff[CMD_RECV_FRAME_FIX_LEN]; // 存放接收到的命令数据
 static volatile uint8_t uart_cmd_buff_recved_len = 0;
 
-// 将一个字节的数据写入缓冲区，后续会用 ble notify 发送出去
-static void ble_notify_buff_write_byte(uint8_t data)
+// 将一个字节的数据写入缓冲区，后续会用 ble write 发送出去
+static void ble_write_buff_write_byte(uint8_t data)
 {
-    ble_notify_buff[ble_notify_buff_len++] = data;
+    ble_write_buff[ble_write_buff_len++] = data;
 }
 
-// 将缓冲区的数据全部通过 ble notify 发送出去
-static void ble_notify_buff_send_all(void)
+// 将缓冲区的数据全部通过 ble write 发送出去
+static void ble_write_buff_send_all(void)
 {
-    service_notify_event(ble_notify_buff, ble_notify_buff_len);
-    ble_notify_buff_len = 0;
+    ble_write_to_server(ble_write_buff, ble_write_buff_len);
+#if USER_DEBUG_ENABLE
+    // u8 i;
+    // for (i = 0; i < ble_write_buff_len; i++)
+    // {
+    //     my_printf("%02x ", ble_write_buff[i]);
+    // }
+    // my_printf("\n");
+#endif
+    ble_write_buff_len = 0;
 }
 
 // 将一个字节的数据写入缓冲区
@@ -86,14 +94,14 @@ uint8_t uart_cmd_buff_read_last_byte(void)
     return uart_cmd_buff[uart_cmd_buff_recved_len - 1];
 }
 
-// 控制命令不正确，调用该函数，将缓冲区的数据转移到 ble_notify_buff
+// 控制命令不正确，调用该函数，将缓冲区的数据转移到 ble_write_buff
 void uart_cmd_buff_error(void)
 {
-    // memcpy(ble_notify_buff, uart_cmd_buff, uart_cmd_buff_recved_len);
+    // memcpy(ble_write_buff, uart_cmd_buff, uart_cmd_buff_recved_len);
     uint8_t i;
     for (i = 0; i < uart_cmd_buff_recved_len; i++)
     {
-        ble_notify_buff_write_byte(uart_cmd_buff[i]);
+        ble_write_buff_write_byte(uart_cmd_buff[i]);
     }
 
     uart_cmd_buff_recved_len = 0;
@@ -217,6 +225,8 @@ void uart_transfer_init(u32 baud)
 
     uart_cmd(UART, ENABLE);
 
+    parser.state = PARSER_STATE_IDLE;
+
 #if USER_DEBUG_ENABLE
     // 只在调试时使用，最终需要去掉这个功能
     my_printf_init(user_uart_putchar); // 注册用户自定义的打印函数
@@ -290,7 +300,8 @@ void uart_transfer_rx_event(void)
                     continue; // 继续循环，处理下一个字节
                 }
 
-                ble_notify_buff_write_byte(byte);
+                // 不是控制命令，将数据存放到缓冲区
+                ble_write_buff_write_byte(byte);
                 parser.state = PARSER_STATE_IDLE;
             }
             else if (parser.state == PARSER_STATE_HEADER_1)
@@ -303,7 +314,7 @@ void uart_transfer_rx_event(void)
                 }
 
                 uart_cmd_buff_error();
-                ble_notify_buff_write_byte(byte);
+                ble_write_buff_write_byte(byte);
                 parser.state = PARSER_STATE_IDLE;
             }
             else if (parser.state == PARSER_STATE_HEADER_2)
@@ -316,7 +327,7 @@ void uart_transfer_rx_event(void)
                 }
 
                 uart_cmd_buff_error();
-                ble_notify_buff_write_byte(byte);
+                ble_write_buff_write_byte(byte);
                 parser.state = PARSER_STATE_IDLE;
             }
             else if (parser.state == PARSER_STATE_HEADER_3)
@@ -330,7 +341,7 @@ void uart_transfer_rx_event(void)
                 }
 
                 uart_cmd_buff_error();
-                ble_notify_buff_write_byte(byte);
+                ble_write_buff_write_byte(byte);
                 parser.state = PARSER_STATE_IDLE;
             }
             else if (parser.state == PARSER_STATE_DATA_1)
@@ -341,7 +352,7 @@ void uart_transfer_rx_event(void)
                     // 开始配对
 #if USER_DEBUG_ENABLE
                     my_printf("recv cmd start pairing\n");
-#endif  
+#endif
                     // 主机应该清除记录从机的蓝牙地址：
                     memset(user_data.ble_addr, 0, sizeof(user_data.ble_addr)); // 清空记录的从机的地址
                     user_data.is_ble_addr_valid = 0;
@@ -354,7 +365,7 @@ void uart_transfer_rx_event(void)
                         // 如果已经连接，断开当前连接
                         ble_disconnect(server_info.conn_handle);
                         // my_printf("disconnect\n"); // 改成在事件处理函数中打印断开连接的信息
-                    } 
+                    }
 
                     ble_scan_en(); // 取消配对会关闭扫描，到进行配对的时候要重新打开扫描
                     uart_cmd_buff_write_byte(byte);
@@ -398,7 +409,7 @@ void uart_transfer_rx_event(void)
                 else
                 {
                     uart_cmd_buff_error();
-                    ble_notify_buff_write_byte(byte);
+                    ble_write_buff_write_byte(byte);
 #if USER_DEBUG_ENABLE
                     my_printf("cmd error\n");
 #endif
@@ -409,12 +420,12 @@ void uart_transfer_rx_event(void)
             }
         }
 
-        // while 循环退出时，如果 ble notify 缓冲区有数据，则发送数据给串口
-        if (ble_notify_buff_len > 0)
+        // while 循环退出时，如果 ble write 缓冲区有数据，则发送数据给串口
+        if (ble_write_buff_len > 0)
         {
-            ble_notify_buff_send_all();
+            ble_write_buff_send_all();
 #if USER_DEBUG_ENABLE
-            my_printf("ble notify\n");
+            my_printf("ble write\n");
 #endif
         }
     }
