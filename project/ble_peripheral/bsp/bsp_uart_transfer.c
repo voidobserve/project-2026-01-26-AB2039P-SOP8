@@ -82,6 +82,27 @@ static void ble_write_buff_send_all(void)
     ble_write_buff_len = 0;
 }
 
+// 主机调用该函数，通过ble将控制命令发送给从机。
+void ble_send_cmd(cmd_code_t cmd_prefix, cmd_code_t cmd_suffix)
+{
+    u8 buf[] = {
+        0x80,
+        0x02,
+        0x02,
+        0xFF, // cmd_prefix
+        0xFF, // cmd_suffix
+    };
+    buf[3] = cmd_prefix;
+    buf[4] = cmd_suffix;
+
+    ble_write_to_server(buf, ARRAY_SIEZE(buf));
+
+#if USER_DEBUG_ENABLE
+    my_printf("in func: ble_send_cmd\n");
+    my_printf("ble send: ble adv dis\n");
+#endif
+}
+
 // 将一个字节的数据写入缓冲区
 void uart_cmd_buff_write_byte(uint8_t data)
 {
@@ -387,6 +408,9 @@ void uart_transfer_rx_event(void)
 
                     if (server_info.conn_handle != 0)
                     {
+                        // 主机断开连接之前，先给从机发送关闭广播的指令 ,还需要延时一下，再断开连接
+                        ble_send_cmd(CMD_BLE_ADV_DIS_PREFIX, CMD_BLE_ADV_DIS_SUFFIX);
+                        delay_ms(10);
                         /*
                             如果已经连接，断开当前连接
                             注意，需要先将 user_data.is_scan_en 清零，再断开连接，

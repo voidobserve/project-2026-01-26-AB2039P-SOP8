@@ -118,7 +118,7 @@ void ble_client_event_callback(uint8_t event_type, uint8_t *packet, uint16_t siz
             my_printf("BLE_EVT_DISCONNECT\n");
 #endif
             server_info.conn_handle = 0;
-
+            user_delay_ctx_cancel(USER_DELAY_CTX_ID_BLE_CONNECT_SUCCESS_FEEDBACK); // 防止连接成功后又马上断开了连接，结果发出连接成功反馈
             if (user_data.is_scan_en)
             {
                 ble_scan_en();

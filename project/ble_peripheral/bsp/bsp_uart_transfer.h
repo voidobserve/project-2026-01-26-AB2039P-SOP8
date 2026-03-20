@@ -39,11 +39,7 @@ typedef enum
     CMD_CONNECT_SUCCESS_PREFIX = 0x94, // 让语音ic播报：蓝牙已连接
     CMD_CONNECT_SUCCESS_SUFFIX = 0x9A,
 
-    // // ==============================================================
-    // // 传输方向： 客户的单片机 -> 蓝牙ic ， 蓝牙ic -> 客户的单片机
-    // CMD_CONNECT_DIS_PREFIX = 0x94, // 断开连接（主机应该清除记忆的从机的地址）
-    // CMD_CONNECT_DIS_SUFFIX = 0x9A,
-
+    // ==============================================================
     // 传输方向： 语音ic -> 蓝牙ic（主机）
     CMD_START_PAIRING_PREFIX = 0x89, // 开始配对
     CMD_START_PAIRING_SUFFIX = 0x8E,
@@ -51,6 +47,13 @@ typedef enum
     CMD_CANCEL_PAIRING_PREFIX = 0x90, // 取消配对
     CMD_CANCEL_PAIRING_SUFFIX = 0x8F,
 
+    // ==============================================================
+    // 传输方向： 蓝牙ic（主机） -> 蓝牙ic（从机）
+    CMD_BLE_ADV_EN_PREFIX = 0x01, // 打开广播
+    CMD_BLE_ADV_EN_SUFFIX = 0x01,
+
+    CMD_BLE_ADV_DIS_PREFIX = 0x02, // 关闭广播
+    CMD_BLE_ADV_DIS_SUFFIX = 0x02,
 } cmd_code_t;
 
 void uart_send_cmd(cmd_code_t cmd_prefix, cmd_code_t cmd_suffix);
