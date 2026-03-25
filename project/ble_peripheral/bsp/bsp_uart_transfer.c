@@ -390,7 +390,8 @@ void uart_transfer_rx_event(void)
 
                     ble_scan_en(); // 取消配对会关闭扫描，到进行配对的时候要重新打开扫描
                     uart_cmd_buff_write_byte(byte);
-                    // uart_cmd_success_feedback(); // 由断开连接事件的处理函数发送，不在这里反馈（ble_client.c -> ble_client_event_callback()）
+
+                    delay_ms(200); // 需要延时，防止语音ic没有收到
                     uart_send_cmd(CMD_PAIRING_HAS_BEGUN_PREFIX, CMD_PAIRING_HAS_BEGUN_SUFFIX);
                 }
                 else if ((uart_cmd_buff_read_last_byte() == CMD_CANCEL_PAIRING_PREFIX &&
@@ -428,6 +429,8 @@ void uart_transfer_rx_event(void)
 #if USER_DEBUG_ENABLE
                     my_printf("master scan disable\n");
 #endif
+
+                    delay_ms(200); // 需要等一段时间，再给语音ic发送 配对取消 反馈
                     uart_send_cmd(CMD_PAIRING_HAS_CANCEL_PREFIX, CMD_PAIRING_HAS_CANCEL_SUFFIX);
                 }
                 else

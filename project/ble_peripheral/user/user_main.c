@@ -22,7 +22,8 @@ void user_data_read(void)
         // 初始化存放的数据
         user_data.valid = USER_DATA_VALID_VAL;
         user_data.is_ble_addr_valid = 0;
-        user_data.is_scan_en = 1; // 默认使能搜索
+        // user_data.is_scan_en = 1; // 默认使能搜索
+        user_data.is_scan_en = 0; // 默认不使能搜索
         memset(user_data.ble_addr, 0, 6);
         user_data_write(); // 将数据写回flash
     }
