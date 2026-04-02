@@ -45,7 +45,7 @@ typedef enum
     CMD_START_PAIRING_SUFFIX = 0x8E,
 
     CMD_CANCEL_PAIRING_PREFIX = 0x90, // 取消配对
-    CMD_CANCEL_PAIRING_SUFFIX = 0x8F,
+    CMD_CANCEL_PAIRING_SUFFIX = 0x95,
 
     // ==============================================================
     // 传输方向： 蓝牙ic（主机） -> 蓝牙ic（从机）
